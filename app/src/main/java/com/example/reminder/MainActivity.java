@@ -32,7 +32,8 @@ public class MainActivity extends AppCompatActivity {
         mListView.setDivider(null);
 
         mDbAdapter = new RemindersDbAdapter(this);
-        /*
+        mDbAdapter.open();
+
         Cursor cursor = mDbAdapter.fetchAllReminders();
 
         //from columns defined in the db
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         //the cursorAdapter (controller) is now updating the listView (view)
         //with data from the db (model)
         mListView.setAdapter(mCursorAdapter);
-        */
+        
         /*
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                 //context
