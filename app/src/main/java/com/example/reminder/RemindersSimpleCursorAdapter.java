@@ -9,18 +9,16 @@ import android.widget.SimpleCursorAdapter;
 public class RemindersSimpleCursorAdapter extends SimpleCursorAdapter {
 
     static class ViewHolder {
-        //store the column index
+        //lưu trữ cột index
         int colImp;
-        //store the view
+        //lưu trữ view
         View listTab;
     }
-
     public RemindersSimpleCursorAdapter(Context context, int layout, Cursor c, String[]
             from, int[] to, int flags) {
         super(context, layout, c, from, to, flags);
     }
 
-    //to use a viewholder, you must override the following two methods and define a ViewHolder class
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         return super.newView(context, cursor, parent);

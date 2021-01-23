@@ -7,20 +7,19 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 public class RemindersDbAdapter {
 
-    //these are the column names
+    //Tên cột
     public static final String COL_ID = "_id";
     public static final String COL_CONTENT = "content";
     public static final String COL_IMPORTANT = "important";
 
-    //these are the corresponding indices
+    //Chỉ số cột tương ứng
     public static final int INDEX_ID = 0;
     public static final int INDEX_CONTENT = INDEX_ID + 1;
     public static final int INDEX_IMPORTANT = INDEX_ID + 2;
 
-    //used for logging
+
     private static final String TAG = "RemindersDbAdapter";
     private DatabaseHelper mDbHelper;
     private SQLiteDatabase mDb;
@@ -31,7 +30,7 @@ public class RemindersDbAdapter {
 
     private final Context mCtx;
 
-    //SQL statement used to create the database
+    //Lệnh SQL để tạo Database
     private static final String DATABASE_CREATE =
             "CREATE TABLE if not exists " + TABLE_NAME + " ( " +
                     COL_ID + " INTEGER PRIMARY KEY autoincrement, " +
@@ -58,7 +57,7 @@ public class RemindersDbAdapter {
     //CRUD
 
     //CREATE
-    //note that the id will be created for you automatically
+    //Id được tạo tự động
     public void createReminder(String name, boolean important) {
         ContentValues values = new ContentValues();
         values.put(COL_CONTENT, name);
@@ -66,7 +65,7 @@ public class RemindersDbAdapter {
         mDb.insert(TABLE_NAME, null, values);
     }
 
-    //overloaded to take a reminder
+    //overloaded
     public long createReminder(Reminder reminder) {
         ContentValues values = new ContentValues();
         values.put(COL_CONTENT, reminder.getmContent()); // Contact Name
@@ -89,6 +88,7 @@ public class RemindersDbAdapter {
                 cursor.getInt(INDEX_IMPORTANT)
         );
     }
+
     public Cursor fetchAllReminders() {
         Cursor mCursor = mDb.query(TABLE_NAME, new String[]{COL_ID,
                         COL_CONTENT, COL_IMPORTANT},
@@ -99,6 +99,8 @@ public class RemindersDbAdapter {
         }
         return mCursor;
     }
+
+
 
     //UPDATE
     public void updateReminder(Reminder reminder) {

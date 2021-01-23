@@ -10,11 +10,11 @@
         app:showAsAction="never" />
         -->
     <item android:id="@+id/action_new"
-        android:title="new Reminder"
+        android:title="Thêm nhật ký"
         android:orderInCategory="100"
         app:showAsAction="never" />
     <item android:id="@+id/action_exit"
-        android:title="exit"
+        android:title="Thoát"
         android:orderInCategory="200"
         app:showAsAction="never" />
 </menu>

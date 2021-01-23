@@ -12,7 +12,7 @@
         android:layout_height="60dp"
         android:gravity="center_vertical"
         android:padding="10dp"
-        android:text="New Reminder:"
+        android:text="Thêm nhật ký:"
         android:textColor="@color/white"
         android:textSize="24sp" />
 
@@ -34,7 +34,7 @@
         android:layout_margin="4dp"
         android:background="@color/black"
         android:paddingLeft="32dp"
-        android:text="Important"
+        android:text="Quan trọng"
         android:textColor="@color/white" />
 
     <LinearLayout
@@ -46,16 +46,16 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="50"
-            android:text="Cancel"
-            android:textColor="@color/white"
+            android:text="Hũy"
+            android:textColor="@color/black"
             />
         <Button
             android:id="@+id/custom_button_commit"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_weight="50"
-            android:text="Commit"
-            android:textColor="@color/white"
+            android:text="Chấp nhận"
+            android:textColor="@color/black"
             />
     </LinearLayout>
 </LinearLayout>

@@ -12,7 +12,7 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
+
 import android.view.ActionMode;
 import android.view.MenuInflater;
 import android.view.View;
@@ -47,34 +47,15 @@ public class MainActivity extends AppCompatActivity {
 
         mDbAdapter = new RemindersDbAdapter(this);
         mDbAdapter.open();
-        if (savedInstanceState == null) {
-            //Clear all data
-            mDbAdapter.deleteAllReminders();
-            //Add some data
-            mDbAdapter.createReminder("Buy Learn Android Studio", true);
-            mDbAdapter.createReminder("Send Dad birthday gift", false);
-            mDbAdapter.createReminder("Dinner at the Gage on Friday", false);
-            mDbAdapter.createReminder("String squash racket", false);
-            mDbAdapter.createReminder("Shovel and salt walkways", false);
-            mDbAdapter.createReminder("Prepare Advanced Android syllabus", true);
-            mDbAdapter.createReminder("Buy new office chair", false);
-            mDbAdapter.createReminder("Call Auto-body shop for quote", false);
-            mDbAdapter.createReminder("Renew membership to club", false);
-            mDbAdapter.createReminder("Buy new Galaxy Android phone", true);
-            mDbAdapter.createReminder("Sell old Android phone - auction", false);
-            mDbAdapter.createReminder("Buy new paddles for kayaks", false);
-            mDbAdapter.createReminder("Call accountant about tax returns", false);
-            mDbAdapter.createReminder("Buy 300,000 shares of Google", false);
-            mDbAdapter.createReminder("Call the Dalai Lama back", true);
-        }
+
         Cursor cursor = mDbAdapter.fetchAllReminders();
 
-        //from columns defined in the db
+        //từ các cột định nghĩa trong db
         String[] from = new String[]{
                 RemindersDbAdapter.COL_CONTENT
         };
 
-        //to the ids of views in the layout
+        //đến ids views định nghĩa trong layout
         int[] to = new int[]{
                 R.id.row_text
         };
@@ -82,32 +63,21 @@ public class MainActivity extends AppCompatActivity {
         mCursorAdapter = new RemindersSimpleCursorAdapter(
                 //context
                 MainActivity.this,
-                //the layout of the row
+                // dòng trên giao diện
                 R.layout.reminders_row,
                 //cursor
                 cursor,
-                //from columns defined in the db
+                //từ các cột định nghĩa trong db
                 from,
-                //to the ids of views in the layout
+                //đến ids views định nghĩa trong layout
                 to,
                 //flag - not used
                 0);
-        //the cursorAdapter (controller) is now updating the listView (view)
-        //with data from the db (model)
+        //cursorAdapter (controller) đang được cập nhật đến lisview listView (view)
+        //dữ liệu lấy từ db (model)
         mListView.setAdapter(mCursorAdapter);
 
-        /*
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                //context
-                this,
-                //layout (view)
-                R.layout.reminders_row,
-                //row (view)
-                R.id.row_text,
-                //data (model) with bogus data to test our listview
-                new String[]{"first record", "second record", "third record"});
 
-        mListView.setAdapter(arrayAdapter);*/
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -118,15 +88,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //The arrayAdatper is the controller in our
-        //model-view-controller relationship. (controller)
-        /**/
+
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int masterListPosition, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 ListView modeListView = new ListView(MainActivity.this);
-                String[] modes = new String[] { "Edit Reminder", "Delete Reminder" };
+                String[] modes = new String[] { "Sửa nhật ký", "Xóa nhật ký" };
                 ArrayAdapter<String> modeAdapter = new ArrayAdapter<>(MainActivity.this,
                         android.R.layout.simple_list_item_1, android.R.id.text1, modes);
                 modeListView.setAdapter(modeAdapter);
@@ -136,12 +104,12 @@ public class MainActivity extends AppCompatActivity {
                 modeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        //edit reminder
+
                         if (position == 0) {
                             int nId = getIdFromPosition(masterListPosition);
                             Reminder reminder = mDbAdapter.fetchReminderById(nId);
                             fireCustomDialog(reminder);
-                            //delete reminder
+
                         } else {
                             mDbAdapter.deleteReminderById(getIdFromPosition(masterListPosition));
                             mCursorAdapter.changeCursor(mDbAdapter.fetchAllReminders());
@@ -149,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-                //edit reminder
+
 
             }
         });
@@ -195,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void fireCustomDialog(final Reminder reminder){
-        // custom dialog
+
         final Dialog dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_custom);
@@ -205,9 +173,9 @@ public class MainActivity extends AppCompatActivity {
         final CheckBox checkBox = (CheckBox) dialog.findViewById(R.id.custom_check_box);
         LinearLayout rootLayout = (LinearLayout) dialog.findViewById(R.id.custom_root_layout);
         final boolean isEditOperation = (reminder != null);
-        //this is for an edit
+
         if (isEditOperation){
-            titleView.setText("Edit Reminder");
+            titleView.setText("Sửa nhật ký");
             checkBox.setChecked(reminder.getmInportant() == 1);
             editCustom.setText(reminder.getmContent());
             rootLayout.setBackgroundColor(getResources().getColor(R.color.blue));
@@ -220,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                     Reminder reminderEdited = new Reminder(reminder.getmId(),
                             reminderText, checkBox.isChecked() ? 1 : 0);
                     mDbAdapter.updateReminder(reminderEdited);
-                    //this is for new reminder
+
                 } else {
                     mDbAdapter.createReminder(reminderText, checkBox.isChecked());
                 }
@@ -240,22 +208,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
+        int id = item.getItemId();
         switch (id){
             case (R.id.action_new):
                 fireCustomDialog(null);
@@ -267,7 +227,5 @@ public class MainActivity extends AppCompatActivity {
                 return false;
         }
 
-
-        //return super.onOptionsItemSelected(item);
     }
 }
